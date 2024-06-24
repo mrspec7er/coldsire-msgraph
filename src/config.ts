@@ -8,19 +8,6 @@ import { User } from "@microsoft/microsoft-graph-types";
 import { DeviceCodeInfo } from "@azure/identity";
 import { TokenCredentialAuthenticationProvider } from "@microsoft/microsoft-graph-client/authProviders/azureTokenCredentials";
 
-const msGraphConfig: MsGraphConfig = {
-  clientId: "b3708121-5a77-4b0e-9c73-395297882115",
-  tenantId: "common",
-  graphUserScopes: [
-    "user.read",
-    "mail.read",
-    "mail.send",
-    "User.ReadWrite.All",
-    "Domain.ReadWrite.All",
-    "Contacts.ReadWrite",
-  ],
-};
-
 let _settings: MsGraphConfig | undefined = undefined;
 let _deviceCodeCredential: DeviceCodeCredential | undefined = undefined;
 let _userClient: Client | undefined = undefined;
@@ -89,7 +76,6 @@ export async function getCurrentUser(): Promise<User> {
 
 export {
   initializeGraph,
-  msGraphConfig,
   greetUserAsync,
   _settings,
   _deviceCodeCredential,

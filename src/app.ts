@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import routesConfig from "./router";
-import { greetUserAsync, initializeGraph, msGraphConfig } from "./config";
+import { greetUserAsync, initializeGraph, MsGraphConfig } from "./config";
 
 dotenv.config();
 const app = express();
@@ -24,6 +24,18 @@ app.listen(process.env.PORT, () => {
 });
 
 async function initializeMsGraph() {
+  const msGraphConfig: MsGraphConfig = {
+    clientId: process.env.GRAPH_API_CLIENT_ID,
+    tenantId: process.env.GRAPH_API_TENANT_ID,
+    graphUserScopes: [
+      "user.read",
+      "mail.read",
+      "mail.send",
+      "User.ReadWrite.All",
+      "Domain.ReadWrite.All",
+      "Contacts.ReadWrite",
+    ],
+  };
   initializeGraph(msGraphConfig);
   await greetUserAsync();
 }
