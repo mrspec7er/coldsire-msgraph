@@ -1,6 +1,7 @@
 import { User } from "@microsoft/microsoft-graph-types";
 import { _deviceCodeCredential, _settings, _userClient } from "../../config";
 import { UserType } from "./dto";
+import { readFileSync } from "fs";
 
 export async function getUser(): Promise<User> {
   if (!_userClient) {
@@ -42,4 +43,15 @@ export async function getOrganizationUsers(): Promise<any> {
   }
 
   return _userClient.api("users").get();
+}
+
+export async function updateUserProfile(id: string, file: Buffer) {
+  if (!_userClient) {
+    throw new Error("Graph has not been initialized for user auth");
+  }
+
+  await _userClient
+    .api(`users/${id}/photo/$value`)
+    .header("Content-Type", "image/png")
+    .put(file);
 }

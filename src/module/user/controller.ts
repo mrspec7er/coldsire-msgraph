@@ -37,3 +37,15 @@ export const getOrganizationUsers = async (req: Request, res: Response) => {
     console.log(err);
   }
 };
+
+export const updateUserProfile = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const profile = req.file;
+
+    await service.updateUserProfile(id, profile.buffer);
+    res.status(200).json("successfully update user profile");
+  } catch (err) {
+    console.log(err);
+  }
+};
