@@ -1,5 +1,6 @@
 import { User } from "@microsoft/microsoft-graph-types";
 import { _deviceCodeCredential, _settings, _userClient } from "../../config";
+import { UserType } from "./dto";
 
 export async function getUser(): Promise<User> {
   if (!_userClient) {
@@ -25,4 +26,20 @@ export async function getUserToken(): Promise<string> {
     _settings?.graphUserScopes
   );
   return response.token;
+}
+
+export async function createUser(payload: UserType): Promise<any> {
+  if (!_userClient) {
+    throw new Error("Graph has not been initialized for user auth");
+  }
+
+  return _userClient.api("users").post(payload);
+}
+
+export async function getOrganizationUsers(): Promise<any> {
+  if (!_userClient) {
+    throw new Error("Graph has not been initialized for user auth");
+  }
+
+  return _userClient.api("users").get();
 }

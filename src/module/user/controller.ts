@@ -18,3 +18,22 @@ export const getUserToken = async (req: Request, res: Response) => {
     console.log(err);
   }
 };
+
+export const createUser = async (req: Request, res: Response) => {
+  try {
+    const userPayload = { ...req.body };
+    await service.createUser(userPayload);
+    res.status(200).json("successfully created user");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getOrganizationUsers = async (req: Request, res: Response) => {
+  try {
+    const users = await service.getOrganizationUsers();
+    res.status(200).json(users);
+  } catch (err) {
+    console.log(err);
+  }
+};
