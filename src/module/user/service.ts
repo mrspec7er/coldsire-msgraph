@@ -11,3 +11,18 @@ export async function getUser(): Promise<User> {
     .select(["displayName", "mail", "userPrincipalName"])
     .get();
 }
+
+export async function getUserToken(): Promise<string> {
+  if (!_deviceCodeCredential) {
+    throw new Error("Graph has not been initialized for user auth");
+  }
+
+  if (!_settings?.graphUserScopes) {
+    throw new Error('Setting "scopes" cannot be undefined');
+  }
+
+  const response = await _deviceCodeCredential.getToken(
+    _settings?.graphUserScopes
+  );
+  return response.token;
+}
